@@ -30,12 +30,18 @@ app = FastAPI(
 )
 
 
+from fastapi.responses import FileResponse
+import os
+
 # ============================================================
 # Root Endpoint
 # ============================================================
 
 @app.get("/")
 def root():
+    frontend_path = os.path.join(os.path.dirname(__file__), "frontend", "index.html")
+    if os.path.exists(frontend_path):
+        return FileResponse(frontend_path)
     return {
         "message": "AI Assessment Generation & Reliability System API is running"
     }
